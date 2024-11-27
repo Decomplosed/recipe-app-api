@@ -15,7 +15,7 @@ class UserManager(BaseUserManager):
         """Create, save and return a new user."""
         user = self.model(email=email, **extra_field)
         user.set_password(password)
-        user.save(using=self.db)
+        user.save(using=self._db)
 
         return user
 
@@ -26,5 +26,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     name = models.CharField(max_length=255)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
+
+    objects = UserManager()
 
     USERNAME_FIELD = 'email'
